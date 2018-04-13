@@ -43,7 +43,7 @@ def plot(basedir, basename, fsample=0.01):
     pos = cc.galactic_cartesian_coords(hcoordinates)
  
     # Make the plot
-    plt.figure(figsize=(8,8))
+    plt.figure(figsize=(8.27, 11.69))
 
     # x-y plot
     plt.subplot(2,2,1).set_aspect("equal")
@@ -74,3 +74,5 @@ def plot(basedir, basename, fsample=0.01):
     plt.legend(loc="lower left")
 
     plt.suptitle("Projected number density of stars")
+
+    plt.savefig("cartesian_plot.pdf")

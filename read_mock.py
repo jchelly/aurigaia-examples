@@ -51,11 +51,16 @@ def read_mock(basedir, basename, datasets, fsample=1.0):
                 for name in infile["Parameters"].attrs:
                     data["Parameters"][name] = infile["Parameters"].attrs[name]
             # Read datasets
+            ind = None
             for name in datasets:
                 if fsample >= 1.0:
                     data[name].append(infile["Stardata"][name][...])
                 else:
-                    ind = np.random.rand(infile["Stardata"][name].shape[0]) < fsample
+                    # When reading first dataset in this file, draw a new random array
+                    # (we need to be sure to take the same sample from each dataset)
+                    if ind is None:
+                        ind = np.random.rand(infile["Stardata"][name].shape[0]) < fsample
+                    # Then sample the dataset
                     data[name].append(infile["Stardata"][name][...][ind,...])
 
         # Next file
