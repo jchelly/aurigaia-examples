@@ -75,4 +75,5 @@ def plot(basedir, basename, fsample=0.01):
 
     plt.suptitle("Projected number density of stars")
 
-    plt.savefig("cartesian_plot.pdf")
+    #plt.savefig("cartesian_plot.pdf")
+    plt.savefig("cartesian_plot.png", dpi=150)
