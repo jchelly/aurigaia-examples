@@ -22,8 +22,8 @@ The following modules are required to run these scripts:
 Each mock catalogue consists of a set of 96 files. They have names of the
 form
 
-  mock_XXX.Y.hdf5 (HITS mocks, with dust extinction) or
-  mock_noex_XXX.Y.hdf5 (ICC mocks, without dust extinction)
+  * mock_XXX.Y.hdf5 (HITS mocks, with dust extinction) or
+  * mock_noex_XXX.Y.hdf5 (ICC mocks, without dust extinction)
 
 where XXX is the angle between the major axis of the bar of the galaxy and
 the Sun-Galactic centre line, and Y is the file index which runs from 0 to 95.
@@ -53,9 +53,9 @@ The datasets HCoordinatesObs and HCoordinates contain the equatorial
 coordinates of the stars with and without errors, respectively. The
 contents of these datasets are as follows:
 
-  HCoordinates[:,0] - right ascension in radians
-  HCoordinates[:,1] - declination in radians
-  HCoordinates[:,2] - parallax in arcseconds
+  * HCoordinates[:,0] - right ascension in radians
+  * HCoordinates[:,1] - declination in radians
+  * HCoordinates[:,2] - parallax in arcseconds
 
 HCoordinatesObs contains the corresponding values with errors, and 
 HCoordinateErrors contains the errors on these quantities.
@@ -70,10 +70,10 @@ The datasets HVelocitiesObs and HVelocities contain the proper motions
 and radial velocities of the stars with and without errors. The contents
 of these datasets are as follows:
 
-  HVelocities[:,0] - proper motion in right ascension*cos(declination), 
-                     in radians
-  HVelocities[:,1] - declination in radians
-  HVelocities[:,2] - radial velocity in km/sec
+  * HVelocities[:,0] - proper motion in right ascension*cos(declination), 
+                       in radians
+  * HVelocities[:,1] - declination in radians
+  * HVelocities[:,2] - radial velocity in km/sec
 
 HVelocitiesObs contains the corresponding values with errors, and 
 HVelocityErrors contains the errors on these quantities.
@@ -91,14 +91,14 @@ described above.
 The mocks also contain apparent magnitudes in the UBVRIJHK bands in the
 dataset Magnitudes. This is a 2D array defined as follows:
 
-Magnitudes[:,0] - apparent magnitude in U
-Magnitudes[:,1] - apparent magnitude in B
-Magnitudes[:,2] - apparent magnitude in R
-Magnitudes[:,3] - apparent magnitude in J
-Magnitudes[:,4] - apparent magnitude in H
-Magnitudes[:,5] - apparent magnitude in K
-Magnitudes[:,6] - apparent magnitude in V
-Magnitudes[:,7] - apparent magnitude in I
+  * Magnitudes[:,0] - apparent magnitude in U
+  * Magnitudes[:,1] - apparent magnitude in B
+  * Magnitudes[:,2] - apparent magnitude in R
+  * Magnitudes[:,3] - apparent magnitude in J
+  * Magnitudes[:,4] - apparent magnitude in H
+  * Magnitudes[:,5] - apparent magnitude in K
+  * Magnitudes[:,6] - apparent magnitude in V
+  * Magnitudes[:,7] - apparent magnitude in I
 
 
 ## Reading the catalogues
