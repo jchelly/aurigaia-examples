@@ -154,7 +154,7 @@ For example, to extract a 1% sample of stars from a set of mock files:
 data = ra.read_aurigaia(basedir="./ICC/v2/chabrierIMF/level3_MHD/halo_6/mockdir_angle030",
                         basename="mock_noex_030",
                         datasets=("Age","Gmagnitude","HCoordinates","HVelocities"),
-                        filters=(ra.RandomSampleFilter(0.01)))
+                        filters=(ra.RandomSampleFilter(0.01),))
 ```
 
 See read_aurigaia.py for examples of how to define these filters. The example
