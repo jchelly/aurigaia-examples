@@ -133,7 +133,7 @@ and optionally filtering out unwanted stars as it goes to save memory.
 This can be used as follows:
 
 ```
-from import read_aurigaia as ra
+import read_aurigaia as ra
 
 data = ra.read_aurigaia(basedir="./ICC/v2/chabrierIMF/level3_MHD/halo_6/mockdir_angle030",
                         basename="mock_noex_030",

@@ -6,10 +6,10 @@
 
 import numpy as np
 import h5py
-import read_mock as rm
+import read_aurigaia as ra
 
 
-def extract_b3v_sample(basename, basedir, outfile):
+def extract_b3v_sample(basedir, basename, outfile):
 
     # Which quantities to read
     datasets = (
@@ -35,13 +35,13 @@ def extract_b3v_sample(basename, basedir, outfile):
     # - V-I colour in range -0.22 to -0.16
     #
     filters = (
-        rm.RangeFilter("Vmagnitude", vmax=16.0),
-        rm.RangeFilter("VabsMagnitude", vmin=-1.2, vmax=-0.9),
-        rm.DifferenceFilter("VabsMagnitude","IabsMagnitude", vmin=-0.22, vmax=-0.16)
+        ra.RangeFilter("Vmagnitude", vmax=16.0),
+        ra.RangeFilter("VabsMagnitude", vmin=-1.2, vmax=-0.9),
+        ra.DifferenceFilter("VabsMagnitude","IabsMagnitude", vmin=-0.22, vmax=-0.16)
         )
 
     # Read the mock
-    data = rm.read_mock(basedir, basename, datasets=datasets, filters=filters)
+    data = ra.read_aurigaia(basedir, basename, datasets=datasets, filters=filters)
     nstars = data["Vmagnitude"].shape[0]
 
     # Write the output file
@@ -74,16 +74,10 @@ def extract_b3v_sample(basename, basedir, outfile):
 
 if __name__ == "__main__":
 
-    basedir  = "/cosma5/data/jch/Gaia/HITS/v1/kroupaIMF/level3_MHD/halo_6/mockdir_angle030/"
-    basename = "mock_030"
-    outfile  = "H_Au06_B3V_Ex.hdf5"
+    import sys
+    
+    basedir  = sys.argv[1]
+    basename = sys.argv[2]
+    outfile  = sys.argv[3]
 
-    #basedir  = "/cosma5/data/jch/Gaia/HITS/v1/kroupaIMF/level3_MHD/halo_6/mockdir_angle030/"
-    #basename = "mock_noex_030"
-    #outfile  = "H_Au06_B3V_NoEx.hdf5"
-
-    #basedir  = "/cosma5/data/jch/Gaia/ICC/v1/chabrierIMF/level3_MHD/halo_6/mockdir_angle030/"
-    #basename = "mock_noex_030"
-    #outfile  = "I_Au06_B3V.hdf5"
-
-    extract_b3v_sample(basename, basedir, outfile)
+    extract_b3v_sample(basedir, basename, outfile)
