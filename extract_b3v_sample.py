@@ -8,9 +8,6 @@ import numpy as np
 import h5py
 import read_mock as rm
 
-import astropy.units as u
-from astropy.coordinates import ICRS, Galactic
-
 
 def extract_b3v_sample(basename, basedir, outfile):
 
