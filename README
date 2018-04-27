@@ -1,11 +1,11 @@
-===== AuriGaia Examples for Python =====
+# AuriGaia Examples for Python
 
 These python scripts demonstrate how to read the AuriGaia mock catalogue
 files and make some basic plots. We also include a brief description of
 the file format here.
 
 
-==== Dependencies ====
+## Dependencies
 
 The following modules are required to run these scripts:
 
@@ -15,9 +15,9 @@ The following modules are required to run these scripts:
   * healpy - for making healpix maps
   * matplotlib - for making plots
 
-==== Mock file format ====
+## Mock file format
 
-=== Layout of the files ===
+### Layout of the files
 
 Each mock catalogue consists of a set of 96 files. They have names of the
 form
@@ -34,7 +34,7 @@ Each dataset has attributes "Description" and "Units" which contain a
 description of the meaning of the dataset and its units, respectively.
 
 
-=== True vs observed quantities ===
+### True vs observed quantities
 
   * Datasets with the suffix "Obs" have been randomly perturbed in line with
     the magnitude of the errors expected in Gaia DR2.
@@ -47,7 +47,7 @@ description of the meaning of the dataset and its units, respectively.
     This contains the "true" value before errors are applied.
 
 
-=== Positions of the stars ===
+### Positions of the stars
 
 The datasets HCoordinatesObs and HCoordinates contain the equatorial
 coordinates of the stars with and without errors, respectively. The
@@ -64,7 +64,7 @@ cartesian_coords.py contains a function which shows how to convert these
 positions into cartesian coordinates using astropy.
 
 
-=== Velocities of the stars ===
+### Velocities of the stars
 
 The datasets HVelocitiesObs and HVelocities contain the proper motions
 and radial velocities of the stars with and without errors. The contents
@@ -82,7 +82,7 @@ cartesian_coords.py contains a function which shows how to convert these
 velocities into Galactic cartesian coordinates using astropy.
 
 
-=== Magnitudes ===
+### Magnitudes
 
 Apparent magnitudes in the Gaia G, GRP and GBP bands are stored in their
 own datasets with and without errors according to the naming scheme
@@ -101,9 +101,9 @@ Magnitudes[:,6] - apparent magnitude in V
 Magnitudes[:,7] - apparent magnitude in I
 
 
-==== Reading the catalogues ====
+## Reading the catalogues
 
-=== Using h5py directly ===
+### Using h5py directly
 
 Individual files can be read as follows:
 
@@ -122,7 +122,7 @@ Using the [...] notation ensures that h5py reads the whole dataset into
 memory and returns a numpy array rather than a h5py.Dataset object.
 
 
-=== Using the read_aurigaia() function ===
+### Using the read_aurigaia() function
 
 The partitioning of stars between files is arbitrary, so in general it
 will be necessary to read all of the files in a mock catalogue to make use 
@@ -162,9 +162,9 @@ extract_b3v_sample.py shows how to read in the B3V stars from figures 6 and
 8 of Grand et al by applying several filters in sequence.
 
 
-==== Example scripts ====
+## Example scripts
 
-=== Making a plot in cartesian coordinates ===
+### Making a plot in cartesian coordinates
 
 The script cartesian_plot.py reads in a random sample of the stars from a
 mock, converts to (heliocentric) galactic cartesian coordinates, and makes 
@@ -178,7 +178,7 @@ python ./cartesian_plot.py ./ICC/v2/chabrierIMF/level3_MHD/halo_6/mockdir_angle0
 The resulting plot is saved to a .png file.
 
 
-=== Making a colour magnitude diagram ===
+### Making a colour magnitude diagram
 
 The script colour_magnitude.py reads in a random sample of the stars from a
 mock and plots a colour magnitude diagram.
@@ -191,7 +191,7 @@ python ./colour_magnitude.py ./ICC/v2/chabrierIMF/level3_MHD/halo_6/mockdir_angl
 The resulting plot is saved to a .pdf file.
 
 
-=== Making a HEALPix map ===
+### Making a HEALPix map
 
 The example healpix_age.py shows how to make a HEALPix map from the mocks.
 Each pixel is coloured by the mean age of the stars in that pixel. The
@@ -205,7 +205,7 @@ python ./healpix_age.py ./ICC/v2/chabrierIMF/level3_MHD/halo_6/mockdir_angle030 
 and the result is written to a .pdf file.
 
 
-=== Extracting a sample of stars ===
+### Extracting a sample of stars
 
 The example extract_b3v_sample.py shows how to use the filters parameter
 of read_aurigaia() to select the sample of B3V stars shown in figures 6
