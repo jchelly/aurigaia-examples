@@ -17,7 +17,8 @@ def plot(basedir, basename, fsample):
                         datasets=("VabsMagnitude",
                                   "IabsMagnitude",
                                   "Magnitudes"),
-                        fsample=fsample)
+                        filters=(rm.RandomSampleFilter(fsample),))
+
     mag_v_abs = data["VabsMagnitude"]
     mag_i_abs = data["IabsMagnitude"]
     mag_v_app = data["Magnitudes"][:,6]

@@ -29,13 +29,14 @@ def plot(basedir, basename, fsample=0.01):
     # Read coordinates from the mock
     data = rm.read_mock(basedir, basename, 
                         datasets=("HCoordinates",),
-                        fsample=fsample)
+                        filters=(rm.RandomSampleFilter(fsample),))
     hcoordinates = data["HCoordinates"]
  
     # Get position of the Sun in kpc relative to the galactic centre
     sun_pos = np.asarray((data["Parameters"]["solarradius"],
-                          data["Parameters"]["solarheight"],
-                          0.0), dtype=float) * 1000.0
+                          0.0,
+                          data["Parameters"]["solarheight"]), dtype=float) * 1000.0
+
     # Position of the Galactic centre relative to the Sun
     gc_pos = -sun_pos
 
@@ -75,5 +76,4 @@ def plot(basedir, basename, fsample=0.01):
 
     plt.suptitle("Projected number density of stars")
 
-    #plt.savefig("cartesian_plot.pdf")
     plt.savefig("cartesian_plot.png", dpi=150)

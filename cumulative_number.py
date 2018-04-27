@@ -25,7 +25,8 @@ def plot(basedir, basename, fsample=0.1):
     data = rm.read_mock(basedir, basename, 
                         datasets=("HCoordinates",
                                   "Gmagnitude"),
-                        fsample=fsample)
+                        filters=(rm.RandomSampleFilter(fsample),))
+
     hcoordinates = data["HCoordinates"]
     mag_g        = data["Gmagnitude"]
  
@@ -33,15 +34,15 @@ def plot(basedir, basename, fsample=0.1):
     ra  = u.Quantity(hcoordinates[:,0], unit=u.radian)
     dec = u.Quantity(hcoordinates[:,1], unit=u.radian)
     parallax = u.Quantity(hcoordinates[:,2], unit=u.arcsec)
+
     # Calculate distance to each star:
     # Distance in parsecs is just 1.0/(parallax in arcsecs),
     # but here we let astropy deal with the units.
     dist = parallax.to(u.kpc, equivalencies=u.parallax())
     
     # Calculate galactic latitude of each star
-    coords_icrs     = ICRS(ra=ra, dec=dec, distance=dist)
-    coords_galactic = coords_icrs.transform_to(Galactic)
-    b_gal = coords_galactic.b
+    coords = ICRS(ra=ra, dec=dec, distance=dist).transform_to(Galactic)
+    b_gal = coords.b
 
     plt.figure(figsize=(8.27, 11.69))
 
@@ -90,7 +91,6 @@ def plot(basedir, basename, fsample=0.1):
     plt.xlim(1.0e-3,1.0e3)
     plt.ylim(1.0,1.0e9)
     plt.title("|b| > 20 degrees")
-
 
 
     plt.suptitle("Cumulative number of stars as a function of G magnitude")

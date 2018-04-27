@@ -22,7 +22,8 @@ def plot(basedir, basename, fsample=0.1):
     data = rm.read_mock(basedir, basename, 
                         datasets=("HCoordinates",
                                   "Age"),
-                        fsample=fsample)
+                        filters=(rm.RandomSampleFilter(fsample),))
+
     ra_radians  = data["HCoordinates"][:,0]
     dec_radians = data["HCoordinates"][:,1]
     age_gyr     = data["Age"]

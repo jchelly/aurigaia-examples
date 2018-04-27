@@ -20,10 +20,11 @@ def plot(basedir, basename, fsample=0.1):
     """
     
     # Read the data
-    data = rm.read_mock(basedir, basename, 
+    data = rm.read_mock(basedir, basename,
                         datasets=("HCoordinates",
                                   "Gmagnitude"),
-                        fsample=fsample)
+                        filters=(rm.RandomSampleFilter(fsample),))
+
     ra_radians  = data["HCoordinates"][:,0]
     dec_radians = data["HCoordinates"][:,1]
     mag_g       = data["Gmagnitude"]
