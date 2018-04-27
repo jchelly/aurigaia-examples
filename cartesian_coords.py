@@ -7,7 +7,7 @@ import astropy.units as u
 from astropy.coordinates import ICRS, Galactic
 
 
-def galactic_cartesian_coords(hcoordinates, hvelocities=None):
+def galactic_cartesian_coordinates(hcoordinates, hvelocities=None):
     """
     Calculate Galactic cartesian coordinates of stars
     from a mock catalogue given equatorial (ICRS) coordinates.
@@ -45,29 +45,26 @@ def galactic_cartesian_coords(hcoordinates, hvelocities=None):
 
     # Extract velocities from HVelocities dataset if present
     if hvelocities is not None:
-        pmra_cosdec = u.Quantity(hvelocities[:,0], unit=u.arcsec/u.year)
-        pm_dec      = u.Quantity(hvelocities[:,1], unit=u.arcsec/u.year)
-        rv          = u.Quantity(hvelocities[:,2], unit=u.km/u.second)
-    else:
-        pmra_cosdec = None
-        pm_dec      = None
-        rv          = None
+        pm_ra_cosdec = u.Quantity(hvelocities[:,0], unit=u.arcsec/u.year)
+        pm_dec       = u.Quantity(hvelocities[:,1], unit=u.arcsec/u.year)
+        rv           = u.Quantity(hvelocities[:,2], unit=u.km/u.second)
 
     # Calculate distance to each star:
     # Distance in parsecs is just 1.0/(parallax in arcsecs),
     # but here we let astropy deal with the units.
     dist = parallax.to(u.kpc, equivalencies=u.parallax())
 
-    # Translate ra and dec into galactic coordinates using astropy
-    # (this is just a rotation)
-    coords = ICRS(ra=ra, dec=dec, distance=dist,
-                  pm_ra_cosdec=pm_ra_cosdec, pm_dec=pm_dec, 
-                  radial_velocity=rv).transform_to(Galactic)
-    
-    # Return positions and velocities
-    pos = coords.cartesian.get_xyz().transpose()
+    # Translate to galactic coordinates using astropy
     if hvelocities is not None:
+        # Have positions and velocities
+        coords = ICRS(ra=ra, dec=dec, distance=dist,
+                      pm_ra_cosdec=pm_ra_cosdec, pm_dec=pm_dec, 
+                      radial_velocity=rv).transform_to(Galactic)
+        pos = coords.cartesian.get_xyz().transpose()
         vel = coords.cartesian.differentials["s"].get_d_xyz().transpose()
         return pos, vel
     else:
+        # Just have positions
+        coords = ICRS(ra=ra, dec=dec, distance=dist).transform_to(Galactic)
+        pos = coords.cartesian.get_xyz().transpose()
         return pos

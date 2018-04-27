@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import healpy as hp
 
-import read_mock as rm
+import read_aurigaia as ra
 
 
 def plot(basedir, basename, fsample=0.1):
@@ -19,10 +19,10 @@ def plot(basedir, basename, fsample=0.1):
     """
     
     # Read the data
-    data = rm.read_mock(basedir, basename, 
-                        datasets=("HCoordinates",
-                                  "Age"),
-                        filters=(rm.RandomSampleFilter(fsample),))
+    data = ra.read_aurigaia(basedir, basename, 
+                            datasets=("HCoordinates",
+                                      "Age"),
+                            filters=(ra.RandomSampleFilter(fsample),))
 
     ra_radians  = data["HCoordinates"][:,0]
     dec_radians = data["HCoordinates"][:,1]
@@ -50,3 +50,12 @@ def plot(basedir, basename, fsample=0.1):
 
     plt.savefig("healpix_age.pdf")
     
+
+if __name__ == "__main__":
+
+    import sys
+
+    basedir  = sys.argv[1]
+    basename = sys.argv[2]
+
+    plot(basedir, basename, fsample=0.1)

@@ -1,5 +1,7 @@
 #!/bin/env python
 
+from __future__ import print_function
+
 import numpy as np
 import h5py
 
@@ -34,7 +36,7 @@ class BaseFilter():
 class RandomSampleFilter(BaseFilter):
     """
     This is intended for use with read_mock() - 
-    set filter=RandomSampleFilter(fsample) to get
+    set filters=(RandomSampleFilter(fsample),) to get
     a random sample of the stars.
     """
     def __init__(self, fsample):
@@ -46,7 +48,7 @@ class RandomSampleFilter(BaseFilter):
 class RangeFilter(BaseFilter):
     """
     This is intended for use with read_mock() - 
-    set filter=RangeFilter(quantity,vmin,vmax) to get
+    set filters=(RangeFilter(quantity,vmin,vmax),) to get
     only stars with quantity 'quantity' in range
     vmin to vmax.
     """
@@ -61,7 +63,7 @@ class RangeFilter(BaseFilter):
 class DifferenceFilter(BaseFilter):
     """
     This is intended for use with read_mock() - 
-    set filter=DifferenceFilter(quantity1,quantity2,vmin,vmax)
+    set filters=(DifferenceFilter(quantity1,quantity2,vmin,vmax),)
     to get only stars with quantitiy1-quantity2 in range
     vmin to vmax.
     """
@@ -75,7 +77,7 @@ class DifferenceFilter(BaseFilter):
         return self._in_range(diff, self.vmin, self.vmax)
 
 
-def read_mock(basedir, basename, datasets, filters=None):
+def read_aurigaia(basedir, basename, datasets, filters=None):
     """
     Read in the specified quantities from a set of mock
     files.

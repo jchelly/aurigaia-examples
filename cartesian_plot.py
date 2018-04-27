@@ -6,11 +6,11 @@ import matplotlib.cm as cm
 
 import numpy as np
 
-import read_mock as rm
+import read_aurigaia as ra
 import cartesian_coords as cc
 
 
-def plot(basedir, basename, fsample=0.01):
+def plot(basedir, basename, fsample=0.1):
     """
     Make a plot of the specified mock in cartesian
     coordinates showing number density of stars.
@@ -27,9 +27,9 @@ def plot(basedir, basename, fsample=0.01):
     """
 
     # Read coordinates from the mock
-    data = rm.read_mock(basedir, basename, 
-                        datasets=("HCoordinates",),
-                        filters=(rm.RandomSampleFilter(fsample),))
+    data = ra.read_aurigaia(basedir, basename, 
+                            datasets=("HCoordinates",),
+                            filters=(ra.RandomSampleFilter(fsample),))
     hcoordinates = data["HCoordinates"]
  
     # Get position of the Sun in kpc relative to the galactic centre
@@ -41,7 +41,7 @@ def plot(basedir, basename, fsample=0.01):
     gc_pos = -sun_pos
 
     # Transform into cartesian coordinates
-    pos = cc.galactic_cartesian_coords(hcoordinates)
+    pos = cc.galactic_cartesian_coordinates(hcoordinates)
  
     # Make the plot
     plt.figure(figsize=(8.27, 11.69))
@@ -77,3 +77,13 @@ def plot(basedir, basename, fsample=0.01):
     plt.suptitle("Projected number density of stars")
 
     plt.savefig("cartesian_plot.png", dpi=150)
+
+
+if __name__ == "__main__":
+
+    import sys
+
+    basedir  = sys.argv[1]
+    basename = sys.argv[2]
+
+    plot(basedir, basename, fsample=0.1)

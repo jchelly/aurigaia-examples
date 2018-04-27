@@ -13,7 +13,7 @@ The following modules are required to run these scripts:
   * h5py - for reading the HDF5 files
   * astropy - for transformations between coordinate systems
   * healpy - for making healpix maps
-
+  * matplotlib - for making plots
 
 ==== Mock file format ====
 
@@ -122,22 +122,22 @@ Using the [...] notation ensures that h5py reads the whole dataset into
 memory and returns a numpy array rather than a h5py.Dataset object.
 
 
-=== Using the read_mock() function ===
+=== Using the read_aurigaia() function ===
 
 The partitioning of stars between files is arbitrary, so in general it
 will be necessary to read all of the files in a mock catalogue to make use 
-of the data. The file read_mock.py provides a function read_mock() to do 
+of the data. The file read_aurigaia.py provides a function read_aurigaia() to do 
 this while only reading quantities which have been specifically asked for 
 and optionally filtering out unwanted stars as it goes to save memory.
 
 This can be used as follows:
 
 ```
-import read_mock as rm
+from import read_aurigaia as ra
 
-data = rm.read_mock(basedir="./ICC/v2/chabrierIMF/level3_MHD/halo_6/mockdir_angle030",
-                    basename="mock_noex_030",
-                    datasets=("Age","Gmagnitude","HCoordinates","HVelocities"))
+data = ra.read_aurigaia(basedir="./ICC/v2/chabrierIMF/level3_MHD/halo_6/mockdir_angle030",
+                        basename="mock_noex_030",
+                        datasets=("Age","Gmagnitude","HCoordinates","HVelocities"))
 ```
 
 This will return a dictionary 'data' where the keys are the dataset names
@@ -151,12 +151,69 @@ as it is read.
 For example, to extract a 1% sample of stars from a set of mock files:
 
 ```
-data = rm.read_mock(basedir="./ICC/v2/chabrierIMF/level3_MHD/halo_6/mockdir_angle030",
-                    basename="mock_noex_030",
-                    datasets=("Age","Gmagnitude","HCoordinates","HVelocities"),
-                    filters=(rm.RandomSampleFilter(0.01)))
+data = ra.read_aurigaia(basedir="./ICC/v2/chabrierIMF/level3_MHD/halo_6/mockdir_angle030",
+                        basename="mock_noex_030",
+                        datasets=("Age","Gmagnitude","HCoordinates","HVelocities"),
+                        filters=(ra.RandomSampleFilter(0.01)))
 ```
 
-The example extract_b3v_sample.py shows how to use this to read in the B3V stars
-from figures 6 and 8 of Grand et al by applying several filters in sequence.
+See read_aurigaia.py for examples of how to define these filters. The example
+extract_b3v_sample.py shows how to read in the B3V stars from figures 6 and
+8 of Grand et al by applying several filters in sequence.
 
+
+==== Example scripts ====
+
+=== Making a plot in cartesian coordinates ===
+
+The script cartesian_plot.py reads in a random sample of the stars from a
+mock, converts to (heliocentric) galactic cartesian coordinates, and makes 
+a plot of the positions of the stars.
+
+The script takes two command line parameters: the directory containing the
+mock files and the base name of the files. E.g:
+```
+python ./cartesian_plot.py ./ICC/v2/chabrierIMF/level3_MHD/halo_6/mockdir_angle030 mock_noex_030
+```
+The resulting plot is saved to a .png file.
+
+
+=== Making a colour magnitude diagram ===
+
+The script colour_magnitude.py reads in a random sample of the stars from a
+mock and plots a colour magnitude diagram.
+
+The script takes two command line parameters: the directory containing the
+mock files and the base name of the files. E.g:
+```
+python ./colour_magnitude.py ./ICC/v2/chabrierIMF/level3_MHD/halo_6/mockdir_angle030 mock_noex_030
+```
+The resulting plot is saved to a .pdf file.
+
+
+=== Making a HEALPix map ===
+
+The example healpix_age.py shows how to make a HEALPix map from the mocks.
+Each pixel is coloured by the mean age of the stars in that pixel. The
+functions healpy.pixelfunc.ang2pix and numpy.bincount can be used to
+efficiently map stars to HEALPix pixels.
+
+As before, this can be run with
+```
+python ./healpix_age.py ./ICC/v2/chabrierIMF/level3_MHD/halo_6/mockdir_angle030 mock_noex_030
+```
+and the result is written to a .pdf file.
+
+
+=== Extracting a sample of stars ===
+
+The example extract_b3v_sample.py shows how to use the filters parameter
+of read_aurigaia() to select the sample of B3V stars shown in figures 6
+and 8 of Grand et al.
+
+The script can be run with
+```
+python ./extract_b3v_sample.py ./ICC/v2/chabrierIMF/level3_MHD/halo_6/mockdir_angle030 mock_noex_030 sample_B3V.hdf5
+```
+where the third command line parameter is the name of the output file to
+create. This file is in the same format as the input mock files.
