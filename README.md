@@ -71,8 +71,8 @@ and radial velocities of the stars with and without errors. The contents
 of these datasets are as follows:
 
   * HVelocities[:,0] - proper motion in right ascension*cos(declination), 
-                       in radians
-  * HVelocities[:,1] - declination in radians
+                       in arcseconds per year
+  * HVelocities[:,1] - proper motion in declination in arcseconds per year
   * HVelocities[:,2] - radial velocity in km/sec
 
 HVelocitiesObs contains the corresponding values with errors, and 
